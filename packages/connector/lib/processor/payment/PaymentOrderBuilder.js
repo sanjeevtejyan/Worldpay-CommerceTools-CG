@@ -60,7 +60,7 @@ class PaymentOrderBuilder {
         new WorldpayAmount(cart.totalPrice.currencyCode, cart.totalPrice.centAmount)
       )
       .withShopperDetails(
-        new WorldpayShopper(cart.shippingAddress.email)
+        new WorldpayShopper(cart.customerEmail)
           .withBrowserAcceptHeader(headers.accept)
           .withBrowserUserAgentHeader(headers.userAgent)
       )
@@ -74,11 +74,11 @@ class PaymentOrderBuilder {
       )
       .withBillingAddress(
         new WorldpayAddress()
-          .withAddress1(cart.billingAddress.streetName)
-          .withAddress2(cart.billingAddress.additionalStreetInfo)
-          .withCity(cart.billingAddress.city)
-          .withPostalCode(cart.billingAddress.postalCode)
-          .withCountryCode(cart.billingAddress.country)
+          .withAddress1(cart.shippingAddress.streetName)
+          .withAddress2(cart.shippingAddress.additionalStreetInfo)
+          .withCity(cart.shippingAddress.city)
+          .withPostalCode(cart.shippingAddress.postalCode)
+          .withCountryCode(cart.shippingAddress.country)
       )
   }
 
@@ -169,15 +169,15 @@ class PaymentOrderBuilder {
     const fraudSightData = new WorldpayFraudSightData()
       .withShopperAddress(
         new WorldpayAddress()
-          .withFirstName(cart.billingAddress.firstName)
-          .withLastName(cart.billingAddress.lastName)
-          .withAddress1(cart.billingAddress.streetName)
-          .withAddress2(cart.billingAddress.additionalStreetInfo)
-          .withCity(cart.billingAddress.city)
-          .withPostalCode(cart.billingAddress.postalCode)
-          .withCountryCode(cart.billingAddress.country)
+          .withFirstName(cart.shippingAddress.firstName)
+          .withLastName(cart.shippingAddress.lastName)
+          .withAddress1(cart.shippingAddress.streetName)
+          .withAddress2(cart.shippingAddress.additionalStreetInfo)
+          .withCity(cart.shippingAddress.city)
+          .withPostalCode(cart.shippingAddress.postalCode)
+          .withCountryCode(cart.shippingAddress.country)
       )
-      .withShopperName(`${cart.billingAddress.firstName} ${cart.billingAddress.lastName}`.trim())
+      .withShopperName(`${cart.shippingAddress.firstName} ${cart.shippingAddress.lastName}`.trim())
 
     if (customer) {
       fraudSightData.withShopperId(customer.id)
